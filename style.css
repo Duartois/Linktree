@@ -206,3 +206,46 @@ h3:hover {
 #footer a {
   text-decoration: none;
 }
+
+/* Adicionando media query para telas menores que 768px */
+@media screen and (max-width: 768px) {
+  /* Ajuste do container principal */
+  #container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Ajuste dos ícones na seção Tabler */
+  #Tabler-icon {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-top: 0;
+  }
+
+  /* Ajuste do perfil */
+  #profile {
+    text-align: center;
+  }
+
+  /* Ajuste dos links sociais */
+  #social-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* Ajuste dos links no footer */
+  ul li a,
+  h3 {
+    padding: 12px 20px;
+  }
+
+  /* Ajuste do tamanho do logo no footer */
+  #footer img {
+    width: 100px;
+    margin-top: 20px;
+  }
+}
