@@ -6,24 +6,26 @@ document.addEventListener("DOMContentLoaded", function () {
   // Light mode from 5 AM to 6 PM
   if (hour >= 5 && hour < 18) {
     html.classList.add("light")
-    applyLightModeStyles()
   } else {
     html.classList.remove("light")
-    applyDarkModeStyles()
   }
 
-  // Função para aplicar estilos do modo claro
-  function applyLightModeStyles() {
-    // Altere a imagem do footer para o modo claro
+  // Função para aplicar estilos do modo claro ou escuro
+  function applyModeStyles(mode) {
+    // Seleciona a imagem do footer
     const img = document.querySelector("#footer img")
-    img.setAttribute("src", "./assets/Logo-dark.svg")
+    // Determina o caminho do arquivo SVG com base no modo
+    const svgPath =
+      mode === "light" ? "./assets/Logo-dark.svg" : "./assets/Logo-light.svg"
+
+    // Verifica se o navegador é o Safari
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+    // Se for o Safari, define o atributo src da imagem para o modo correto
+    if (isSafari) {
+      img.setAttribute("src", svgPath)
+    }
   }
 
-  // Função para aplicar estilos do modo escuro
-  function applyDarkModeStyles() {
-    // Altere a imagem do footer para o modo escuro
-    const img = document.querySelector("#footer img")
-    img.setAttribute("src", "./assets/Logo-light.svg")
-  }
-  
+  // Aplica estilos com base no modo atual
+  applyModeStyles(html.classList.contains("light") ? "light" : "dark")
 })
