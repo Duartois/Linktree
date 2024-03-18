@@ -10,9 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     html.classList.remove("light")
   }
 
-  // Verifica se o navegador é o Safari
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
-
   // Função para carregar a imagem
   function loadSVG() {
     // Determina o caminho do arquivo SVG com base no modo
@@ -20,23 +17,44 @@ document.addEventListener("DOMContentLoaded", function () {
       ? "/assets/Logo-light.svg"
       : "/assets/Logo-dark.svg"
 
-    // Se for o Safari, carrega a imagem via XMLHttpRequest
-    if (isSafari) {
+    // Verifica se o navegador é o Safari em dispositivos móveis
+    const isMobileSafari =
+      /Safari/i.test(navigator.userAgent) &&
+      /iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+    // Se for o Safari em dispositivos móveis, carrega a imagem via XMLHttpRequest
+    if (isMobileSafari) {
       const xhr = new XMLHttpRequest()
       xhr.open("GET", svgPath, true)
       xhr.overrideMimeType("image/svg+xml")
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          const svg = xhr.responseXML.documentElement
-          const img = document.querySelector("#footer img")
-          img.parentNode.replaceChild(svg, img)
+          const newImg = new Image()
+          newImg.src =
+            "data:image/svg+xml," + encodeURIComponent(xhr.responseText)
+          newImg.onload = function () {
+            // Substitui a imagem existente quando o carregamento estiver completo
+            const oldImg = document.querySelector("#footer img")
+            oldImg.parentNode.replaceChild(newImg, oldImg)
+          }
+          newImg.onerror = function () {
+            console.error("Erro ao carregar a imagem.")
+          }
         }
       }
       xhr.send()
     } else {
-      // Se não for o Safari, carrega a imagem normalmente
-      const img = document.querySelector("#footer img")
-      img.setAttribute("src", svgPath)
+      // Se não for o Safari em dispositivos móveis, carrega a imagem normalmente
+      const newImg = new Image()
+      newImg.onload = function () {
+        // Substitui a imagem existente quando o carregamento estiver completo
+        const oldImg = document.querySelector("#footer img")
+        oldImg.parentNode.replaceChild(newImg, oldImg)
+      }
+      newImg.onerror = function () {
+        console.error("Erro ao carregar a imagem.")
+      }
+      newImg.src = svgPath
     }
   }
 
