@@ -6,21 +6,40 @@ document.addEventListener("DOMContentLoaded", function () {
   // Light mode from 5 AM to 6 PM
   if (hour >= 5 && hour < 18) {
     html.classList.add("light")
-    applyModeStyles("light")
   } else {
     html.classList.remove("light")
-    applyModeStyles("dark")
   }
 
-  // Função para aplicar estilos do modo claro ou escuro
-  function applyModeStyles(mode) {
-    // Seleciona a imagem do footer
-    const img = document.querySelector("#footer img")
+  // Verifica se o navegador é o Safari
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
+  // Função para carregar a imagem
+  function loadSVG() {
     // Determina o caminho do arquivo SVG com base no modo
-    const svgPath =
-      mode === "light" ? "/assets/Logo-light.svg" : "/assets/Logo-dark.svg"
+    const svgPath = html.classList.contains("light")
+      ? "/assets/Logo-light.svg"
+      : "/assets/Logo-dark.svg"
 
-    // Define o atributo src da imagem para o modo correto
-    img.setAttribute("src", window.location.origin + svgPath)
+    // Se for o Safari, carrega a imagem via XMLHttpRequest
+    if (isSafari) {
+      const xhr = new XMLHttpRequest()
+      xhr.open("GET", svgPath, true)
+      xhr.overrideMimeType("image/svg+xml")
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          const svg = xhr.responseXML.documentElement
+          const img = document.querySelector("#footer img")
+          img.parentNode.replaceChild(svg, img)
+        }
+      }
+      xhr.send()
+    } else {
+      // Se não for o Safari, carrega a imagem normalmente
+      const img = document.querySelector("#footer img")
+      img.setAttribute("src", svgPath)
+    }
   }
+
+  // Carrega a imagem
+  loadSVG()
 })
