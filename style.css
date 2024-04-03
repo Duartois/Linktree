@@ -9,7 +9,7 @@
   --bg-color: #21223b;
   --stroke-color: white;
   --surface-color: #21223b;
-  --surface-button-color: #CAB48B;
+  --surface-button-color: #cab48b;
   --button-color: #21223b;
 }
 
@@ -23,11 +23,10 @@
 .light a:hover {
   --text-color: #21223b;
   --surface-color: #21223b;
-  
 }
 
 .light h3:hover {
-  --text-color: #CAB48B;
+  --text-color: #cab48b;
   --bg-color: var(--surface-button-color);
 }
 
@@ -86,7 +85,7 @@ body * {
 }
 
 #profile img {
-  width: 90px;
+  width: 140px;
 }
 
 #profile p {
@@ -190,7 +189,6 @@ h3:hover {
 #footer {
   text-align: center;
   display: block;
-
 }
 
 #footer img {
@@ -200,7 +198,6 @@ h3:hover {
 
 #footer p {
   text-align: center;
-
 }
 
 #footer a {
@@ -230,10 +227,10 @@ h3:hover {
   }
 
   #profile h1 {
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 20px;
-}
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+  }
 
   /* Ajuste dos links sociais */
   #social-links {
